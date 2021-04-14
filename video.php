@@ -1,20 +1,3 @@
-<?php
-//$ht = "13.125.227.50";
-$ht = "localhost";
-$un = "ubuntu";
-$pw = "bell5works";
-$db = "testdb";
-$pt = "3306";
-
-$connect = mysqli_connect($ht, $un, $pw, $db, $pt) or die("실패2");
-
-mysqli_select_db($connect, $db) or die("실패");
-
-$sql = "SELECT * FROM save_progress ORDER BY created_at LIMIT 1";
-$result = $connect->query($sql);
-$res = $result->fetch_assoc();
-
-?>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="https://kit.fontawesome.com/9bf1b593b9.js" crossorigin="anonymous"></script>
 
