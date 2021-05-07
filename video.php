@@ -49,22 +49,20 @@
     btnMute.addEventListener("click", muteVolume);
     save_btn.addEventListener("click", function(){setTimeToDB(getCurrentTime(), "clicksavebtn")});
     volumeBar.addEventListener("change", function(evt) {
-        console.log(evt.target.value);
         player.volume = evt.target.value/100;
-        console.log(player.volume);
-        console.log(player.muted);
     });
 
     player.addEventListener('timeupdate', updateProgressBar, false);
     player.addEventListener('ended', function() { this.pause(); }, false);
-    player.addEventListener("ontimeupdate", checkChangeCurrentTime);
     window.addEventListener("beforeunload", function(e){
         setTimeToDB(getCurrentTime(), "beforeEscape");
     });
 
     function checkChangeCurrentTime() {
         let currentTime = getCurrentTime();
-        setTimeToDB(currentTime, "ontimeupdate");
+        if(Math.floor(currentTime)%5 === 0){
+            setTimeToDB(currentTime, "onTimeUpdate");
+        }
     }
 
     function setTimeToDB(currentTime, type){
@@ -76,7 +74,7 @@
         });
     }
 
-    function getTimeToDB() {
+    function getTimeForDB() {
         $.ajax({
             url: "getTime_ajax.php",
             type: 'get',
@@ -100,7 +98,7 @@
         let percent = e.offsetX / this.offsetWidth;
         player.currentTime = percent * player.duration;
         e.target.value = percent;
-        setTimeToDB(getCurrentTime(), "seektimeupdate")
+        setTimeToDB(getCurrentTime(), "seekTimeUpdate")
     }
 
     function playPauseVideo() {
@@ -148,6 +146,7 @@
     function updateProgressBar() {
         let percentage = Math.floor((1 / player.duration) * player.currentTime * 100) / 100;
         progressBar.value = percentage;
+        checkChangeCurrentTime();
     }
 
     function resetPlayer() {
@@ -193,5 +192,5 @@
     }
 
     //실행코드3
-    getTimeToDB();
+    getTimeForDB();
 </script>
