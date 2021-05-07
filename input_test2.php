@@ -1,11 +1,17 @@
 <?php
 
-$trackNumArr = array(1,2,3);
-$tagArr = array("가", "나", "다");
-$tagData = array("가가가1", "나나나2", "다다다3");
-
-$trackCount = count($trackNumArr);
-$tagCount = count($tagArr);
+$array = array(
+    array(
+        array(1, "가", "가가가1"),
+        array(2, "나", "나나나2"),
+        array(3, "다", "다다다3")
+    ),
+    array(
+        array(4, "라", "라라라4"),
+        array(5, "마", "마마마5"),
+        array(6, "바", "바바바6")
+    ),
+);
 
 ?>
 
@@ -17,10 +23,12 @@ $tagCount = count($tagArr);
 <form action="input_confirm.php" method="post">
     Form1<br>
     <?php
-    for($i = 0; $i < $trackCount; $i++){
-        echo "TrackNum: <input type='text' name='track[][][]' value='{$trackNumArr[$i]}'>";
-        echo "Tag: <input type='text' name='track[][][]' value='{$tagArr[$i]}'>";
-        echo "TagData: <input type='text' name='track[][][]' value='{$tagData[$i]}'>";
+    for($i = 0; $i < count($array); $i++){
+        for($j = 0; $j < count($array[$i]); $j++){
+            for($k = 0; $k < count($array[$i][$j]); $k++){
+                echo "<input type='text' name='track[$i][$j][$k]' value='{$array[$i][$j][$k]}'>";
+            }
+        }
         echo "<br>";
     }
     ?>
